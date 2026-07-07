@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.0",
+  "latestVersion": "1.0.1",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager/releases/latest",
   "announcements": [
     {
       "id": "2026-07-07-welcome",
       "date": "2026-07-07",
       "severity": "info",
-      "message": "🎉 Welcome to Cousin Server Manager! Check back here for updates."
+      "message": "🎉 Welcome to Cousin Server Manager! Updates will appear here."
     }
   ]
 }
