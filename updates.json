@@ -5,8 +5,8 @@
     {
       "id": "2026-07-08-SmallPatch",
       "date": "2026-07-08",
-      "severity": "warning",
-      "message": "New minor version update for bug fixing (Version 1.0.3)"
+      "severity": "info",
+      "message": "Thanks for downloading Cousin Server Manager. Any updates are gonna be displayed here"
     }
   ]
 }
