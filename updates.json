@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.4",
+  "latestVersion": "1.0.5",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest",
   "announcements": [
     {
       "id": "2026-07-08-MinorPatch",
       "date": "2026-07-08",
       "severity": "info",
-      "message": "Minor patch to add version number to the web interface"
+      "message": "Minor patch to the account page, some functionnalities added."
     }
   ]
 }
