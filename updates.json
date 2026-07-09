@@ -1,11 +1,11 @@
 {
-  "latestVersion": "1.0.6",
-  "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest",
+  "latestVersion": "1.0.7",
+  "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-07-09-MinorPatch",
       "date": "2026-07-09",
-      "severity": "info",
+      "severity": "warning",
       "message": "Minor patch to add a toggle button in the Edit server window"
     }
   ]
