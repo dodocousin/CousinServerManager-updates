@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.8",
+  "latestVersion": "1.0.9",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-07-10-MinorPatch",
       "date": "2026-07-10",
       "severity": "warning",
-      "message": "Patch V1.0.8 - Auto-Update and restart Improvements"
+      "message": "Patch Notes V1.0.9 — Mod & Server File Improvements"
     }
   ]
 }
