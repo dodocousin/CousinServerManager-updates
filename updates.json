@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.0.7",
+  "latestVersion": "1.0.8",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-07-09-MinorPatch",
-      "date": "2026-07-09",
+      "id": "2026-07-10-MinorPatch",
+      "date": "2026-07-10",
       "severity": "warning",
-      "message": "Minor patch to add a toggle button in the Edit server window"
+      "message": "Patch V1.0.8 - Auto-Update and restart Improvements"
     }
   ]
 }
