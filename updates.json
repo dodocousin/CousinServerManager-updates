@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.1.1",
+  "latestVersion": "1.1.2",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-07-12-MinorPatch",
       "date": "2026-07-12",
       "severity": "warning",
-      "message": "Patch Notes V1.1.1 — INI Editor & Copy Safety Fix"
+      "message": "Patch Notes V1.1.2 — Backup Path Detection Fix"
     }
   ]
 }
