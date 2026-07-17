@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.1",
+  "latestVersion": "1.2.2",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-07-17-MinorPatch",
       "date": "2026-07-17",
       "severity": "warning",
-      "message": "Cousin Server Manager v1.2.0 — Discord Integration Update"
+      "message": "Cousin Server Manager v1.2.2 — 🛠️ Copy Configuration Fix"
     }
   ]
 }
