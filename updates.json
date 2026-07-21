@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.2",
+  "latestVersion": "1.2.3",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-07-17-MinorPatch",
-      "date": "2026-07-17",
+      "id": "2026-07-20-MinorPatch",
+      "date": "2026-07-20",
       "severity": "warning",
-      "message": "Cousin Server Manager v1.2.2 — 🛠️ Copy Configuration Fix"
+      "message": "Cousin Server Manager v1.2.3 — Persistent Server Logs"
     }
   ]
 }
