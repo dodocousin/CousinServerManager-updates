@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.5",
+  "latestVersion": "1.2.6",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-07-31-MinorPatch",
       "date": "2026-07-31",
       "severity": "warning",
-      "message": "Cousin Server Manager v1.2.5 — 🐛 CurseForge API Key Persistence Fix"
+      "message": "Cousin Server Manager v1.2.6 — 🛠️ Fixed ASA API Crash Classification"
     }
   ]
 }
