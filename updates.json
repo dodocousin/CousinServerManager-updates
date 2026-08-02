@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.6",
+  "latestVersion": "1.2.7",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-07-31-MinorPatch",
-      "date": "2026-07-31",
-      "severity": "warning",
-      "message": "Cousin Server Manager v1.2.6 — 🛠️ Fixed ASA API Crash Classification"
+      "id": "2026-08-02-MinorPatch",
+      "date": "2026-08-02",
+      "severity": "info",
+      "message": "Cousin Server Manager v1.2.7 — 🔍 Improved INI Settings Search"
     }
   ]
 }
