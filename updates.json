@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.8",
+  "latestVersion": "1.2.9",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-08-03-MinorPatch",
-      "date": "2026-08-03",
+      "id": "2026-08-07-MinorPatch",
+      "date": "2026-08-07",
       "severity": "warning",
-      "message": "Cousin Server Manager v1.2.8 — 🐛 Bug Fix: CPU Core Affinity incorrectly selecting extra cores on 32+ core systems"
+      "message": "Cousin Server Manager v1.2.8 — 🛠️ Fix: Automatic Server Shutdown Recovery"
     }
   ]
 }
