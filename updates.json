@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.2.9",
+  "latestVersion": "2.0.0",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-08-07-MinorPatch",
-      "date": "2026-08-07",
-      "severity": "warning",
-      "message": "Cousin Server Manager v1.2.8 — 🛠️ Fix: Automatic Server Shutdown Recovery"
+      "id": "2026-08-09-MajorPatch",
+      "date": "2026-08-09",
+      "severity": "info",
+      "message": "Cousin Server Manager v2.0.0 — 🛠️ Fix: Automatic Server Shutdown Recovery"
     }
   ]
 }
