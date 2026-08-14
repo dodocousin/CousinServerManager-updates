@@ -1,6 +1,6 @@
 # Cousin Server Manager
 
-**Current application version: 1.2.9**
+**Current application version: 1.3.4**
 
 Cousin Server Manager is a Windows-based web control panel for operating one
 or many **ARK: Survival Ascended** dedicated servers. It combines server
