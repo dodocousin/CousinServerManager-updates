@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.3.1",
+  "latestVersion": "1.3.2",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-08-12-MinorPatch",
-      "date": "2026-08-12",
+      "id": "2026-08-13-MinorPatch",
+      "date": "2026-08-13",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version upgrade v1.3.1 — 🚀 Update & Maintenance Improvements"
+      "message": "Cousin Server Manager minor version v1.3.2 — 🔧 Installation, Scheduled Restarts & Backup Improvements"
     }
   ]
 }
