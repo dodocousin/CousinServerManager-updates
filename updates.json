@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.4.1",
+  "latestVersion": "1.4.2",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-08-18-MinorPatch",
       "date": "2026-08-18",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version v1.4.0 — Beacon INI Sync"
+      "message": "Cousin Server Manager minor version v1.4.2 — Beacon INI Sync"
     }
   ]
 }
