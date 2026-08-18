@@ -1,17 +1,14 @@
 # Cousin Server Manager
 
-<<<<<<< HEAD
-**Current application version: 1.3.5**
-=======
-**Current application version: 1.3.2**
->>>>>>> 46f66f0e00a3c721698b92505483f3aecb22ffc4
+**Current application version: 1.4.0**
 
 Cousin Server Manager is a Windows-based web control panel for operating one
 or many **ARK: Survival Ascended** dedicated servers. It combines server
 lifecycle control, SteamCMD installation and updates, safe INI editing,
-scheduled maintenance, backups, RCON administration, mods, ASA API plugins,
-Discord alerts, player bans, multi-user permissions, watchdog recovery, and
-UPS-aware emergency shutdown protection in one local application.
+Beacon-backed advanced configuration, scheduled maintenance, backups, RCON
+administration, mods, ASA API plugins, Discord alerts, player bans, multi-user
+permissions, watchdog recovery, and UPS-aware emergency shutdown protection in
+one local application.
 
 The manager runs on the Windows host that runs your ARK servers and is
 controlled from a browser at `http://localhost:<port>` (the port is selected
@@ -31,6 +28,8 @@ closed.
 - **Windows integration:** PowerShell, SteamCMD, process controls, Registry,
   Explorer, certificate store, and Windows shutdown commands
 - **RCON:** Source RCON through `rcon-srcds`
+- **Beacon integration:** authenticated Beacon API access and Beacon v4 catalog
+  data for advanced ARK configuration
 - **Packaging:** `pkg` creates the standalone Windows executable and Inno Setup
   creates the installer
 - WebSocket updates carry live state changes, logs, countdowns, installation
@@ -61,6 +60,7 @@ in your browser.
   - [Overview](#overview)
   - [Launch Parameters](#launch-parameters)
   - [INI Settings](#ini-settings)
+  - [Beacon Advanced Config](#beacon-advanced-config)
   - [Auto-Update Monitor](#auto-update-monitor)
   - [Auto-Restart Scheduler](#auto-restart-scheduler)
   - [RCON Console](#rcon-console)
@@ -273,6 +273,63 @@ A direct editor for `Game.ini` and `GameUserSettings.ini`:
 - **📁 Open Folder** to jump straight to the INI files in Windows Explorer
 - **📋 Copy to...** — copy an entire file, whole sections, or individual
   key/value pairs to one or more other servers (see [Copy Tools](#-copy-tools))
+
+
+### Beacon Advanced Config
+
+Version **1.4.0** introduces direct **Beacon integration** for advanced
+ARK: Survival Ascended configuration. The new Beacon Advanced Config interface
+uses Beacon's catalog data while keeping the generated configuration inside the
+normal Cousin Server Manager workflow.
+
+- **Connect to Beacon** — authenticate the Server Manager with Beacon and keep
+  the connection available for Beacon-backed configuration features
+- **Beacon v4 catalog integration** — use Beacon's ARK configuration catalog as
+  the reference for supported advanced settings and official/base values
+- **Per-server state** — each configured ASA server/map keeps its own Beacon
+  Advanced Config selections
+- **Generated configuration preview** — review the resulting `Game.ini`,
+  `GameUserSettings.ini`, and supporting launch-setting changes before they are
+  applied
+- **Safe INI application** — generated changes continue through the manager's
+  normal revision checks, recovery backups, and pending-change workflow instead
+  of bypassing the existing INI editor
+- **Running-server protection** — when an affected INI cannot safely be replaced
+  immediately, the changes are queued and applied through the normal `.pending`
+  configuration system
+
+#### Item Stat Limits
+
+Beacon-backed **Item Stat Limits** can be configured directly from the Server
+Manager. Individual item-stat indexes can be enabled and adjusted without
+manually building every clamp entry.
+
+For supported indexes, the interface can expose Beacon's base/official
+**Raw Clamp** value as a reference while the administrator chooses the value to
+apply.
+
+The manager generates the appropriate item-stat clamp entries in `Game.ini`,
+for example:
+
+```ini
+ItemStatClamps[0]=...
+ItemStatClamps[1]=...
+ItemStatClamps[2]=...
+```
+
+When at least one Item Stat Limit is enabled, the Server Manager also handles
+the supporting settings needed for the clamp configuration to actually be used
+by ASA:
+
+```ini
+?ClampItemStats=True
+```
+
+The required `ClampItemSets` launch setting is enabled alongside the selected
+Item Stat Limits.
+
+This avoids an incomplete setup where `ItemStatClamps[...]` values exist in the
+INI but the server-side clamp feature was never activated.
 
 ### Auto-Update Monitor
 
@@ -626,9 +683,9 @@ Available at `/account.html` (via the **👤 Account** button):
   - **Reset Password** or **delete** any non-master user
   - Manually **enable/disable** non-master accounts
   - Per-user **allowed tabs** — toggle exactly which server-detail tabs
-    (Overview, Launch Params, INI Settings, Auto-Update, Auto-Restart, RCON
-    Console, Logs, Auto-Save & Backups, Mods, API & Plugins, Discord) that
-    user can see
+    (Overview, Launch Params, INI Settings, Beacon Advanced Config, Auto-Update,
+    Auto-Restart, RCON Console, Logs, Auto-Save & Backups, Mods, API & Plugins,
+    Discord) that user can see
   - Per-user **allowed actions** — individually grant/revoke sensitive
     actions like Delete Game Save, Delete Cluster Folder, Edit Server,
     Delete Profile Backup, Copy Server Config, Rename Cluster, Delete
@@ -706,9 +763,9 @@ data remains available. Announcement banners support `info`, `warning`, and
 
 Runtime data is stored beside the installed executable in `data/`. It includes
 server and cluster definitions, users, the session secret, license state,
-runtime PIDs, app/CurseForge settings, logs, uptime records, custom RCON
-commands, bans, schedules, backups (unless a custom path is configured), and
-NUT configuration/history.
+runtime PIDs, app/CurseForge settings, Beacon connection/configuration state,
+logs, uptime records, custom RCON commands, bans, schedules, backups (unless a
+custom path is configured), and NUT configuration/history.
 
 - Installer upgrades preserve the `data/` directory.
 - Uninstall also preserves it by default so settings and saves are not
@@ -739,9 +796,10 @@ prefer a VPN or a properly configured HTTPS reverse proxy and firewall. Do not
 port-forward the manager directly to the public internet without adding TLS,
 access restrictions, rate limiting, and appropriate operational hardening.
 
-Treat RCON passwords, admin passwords, CurseForge keys, Discord webhook URLs,
-license keys, plugin configs, and the complete `data/` directory as sensitive.
-Never commit live credentials to source control.
+Treat RCON passwords, admin passwords, CurseForge keys, Beacon authentication
+data, Discord webhook URLs, license keys, plugin configs, and the complete
+`data/` directory as sensitive. Never commit live credentials to source
+control.
 
 ---
 
@@ -881,6 +939,20 @@ They are suggestions, not currently implemented features.
 - Save it from the Mods tab; current versions persist it in
   `data/app-config.json`.
 - If a key was ever committed or shared, revoke and rotate it.
+
+
+### Beacon connection or catalog loading fails
+
+- Confirm the Server Manager host has working internet access to Beacon.
+- Reconnect Beacon from the Beacon Advanced Config interface if the saved
+  authorization is no longer valid.
+- Reload the Beacon-backed configuration data if expected catalog values are
+  missing.
+- If Item Stat Limits were applied but do not take effect in-game, confirm the
+  generated configuration includes `?ClampItemStats=True` and that
+  `ClampItemSets` is enabled in the launch configuration.
+- Review the Server Manager logs for Beacon authentication, API, catalog, or
+  generated-configuration errors before manually changing the affected INIs.
 
 ### USB UPS detection fails
 
