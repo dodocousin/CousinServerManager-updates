@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.4.2",
+  "latestVersion": "1.4.3",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-08-18-MinorPatch",
-      "date": "2026-08-18",
+      "id": "2026-08-19-MinorPatch",
+      "date": "2026-08-19",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version v1.4.2 — Beacon INI Sync"
+      "message": "Cousin Server Manager minor version v1.4.3 — RCON Startup Reliability Fix for slower server *(attempt)*"
     }
   ]
 }
