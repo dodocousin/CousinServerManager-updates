@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.4.4",
+  "latestVersion": "1.4.5",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-08-21-MinorPatch",
-      "date": "2026-08-21",
+      "id": "2026-09-02-MinorPatch",
+      "date": "2026-09-02",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version v1.4.4 — Small fix for big ini files with the beacon integration"
+      "message": "Cousin Server Manager minor version v1.4.4  — Custom Mod Map Support"
     }
   ]
 }
