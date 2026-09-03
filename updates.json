@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.4.6.1",
+  "latestVersion": "1.4.6.2",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
-      "id": "2026-09-03-MinorPatch",
+      "id": "2026-09-02-MinorPatch",
       "date": "2026-09-03",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version v1.4.6.1  — Minor patch for beacon parsing improvement"
+      "message": "Cousin Server Manager minor version v1.4.6.1  — Minor patch Bulk Action Failure Alert"
     }
   ]
 }
