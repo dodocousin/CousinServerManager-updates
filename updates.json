@@ -1,12 +1,12 @@
 {
-  "latestVersion": "1.4.6.4",
+  "latestVersion": "1.4.6.5",
   "downloadUrl": "https://github.com/dodocousin/CousinServerManager-updates/releases/latest/download/CousinServerManagerSetup.exe",
   "announcements": [
     {
       "id": "2026-10-07-MinorPatch",
       "date": "2026-10-07",
       "severity": "warning",
-      "message": "Cousin Server Manager minor version v1.4.6.4  — Permissions Fix"
+      "message": "Cousin Server Manager minor version v1.4.6.5  — Permissions Fix and small improvement"
     }
   ]
 }
