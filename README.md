@@ -1,14 +1,15 @@
 # Cousin Server Manager
 
-**Current application version: 1.4.6.3**
+**Current application version: 1.6.0.0**
 
 Cousin Server Manager is a Windows-based web control panel for operating one
 or many **ARK: Survival Ascended** dedicated servers. It combines server
 lifecycle control, SteamCMD installation and updates, safe INI editing,
 Beacon-backed advanced configuration, scheduled maintenance, backups, RCON
 administration, mods, ASA API plugins, Discord alerts, player bans, multi-user
-permissions, watchdog recovery, and UPS-aware emergency shutdown protection in
-one local application.
+permissions, watchdog recovery, UPS-aware emergency shutdown protection, and a
+**public API with webhooks** for your own tools and bots in one local
+application.
 
 The manager runs on the Windows host that runs your ARK servers and is
 controlled from a browser at `http://localhost:<port>` (the port is selected
@@ -84,6 +85,11 @@ in your browser.
   - [In-Game & Discord Alerts](#in-game--discord-alerts)
   - [UPS History](#ups-history)
 - [Account Manager](#-account-manager)
+- [Public API & Webhooks](#-public-api--webhooks)
+  - [API Keys](#api-keys)
+  - [What the API can do](#what-the-api-can-do)
+  - [Webhooks](#webhooks)
+  - [Network & Remote Access](#network--remote-access)
 - [Licensing](#-licensing)
 - [Update / Announcement Feed](#-update--announcement-feed)
 - [Data, Updates & Security](#-data-updates--security)
@@ -678,6 +684,12 @@ Available at `/account.html` (via the **👤 Account** button):
 - **My Account** — change your own password
 - **License Status** *(master only)* — view license status, time remaining,
   machine hash, and activate or re-check a license key
+- **API Keys** — create, review and revoke API keys for your own tools
+  (see [Public API & Webhooks](#-public-api--webhooks))
+- **Webhooks** — send events to your own URL, with test button and delivery
+  log
+- **Network & Remote Access** *(master only)* — listen address, reverse-proxy
+  and HTTPS settings for remote access
 - **Manage Users** *(master only)*:
   - Create additional user accounts with their own username/password
   - **Reset Password** or **delete** any non-master user
@@ -691,12 +703,88 @@ Available at `/account.html` (via the **👤 Account** button):
     Delete Profile Backup, Copy Server Config, Rename Cluster, Delete
     Cluster
   - Per-user **allowed features** — grant/revoke access to the global
-    **Ban Manager** and **Scheduled Commands** tools
+    **Ban Manager** and **Scheduled Commands** tools, and to **API Keys**
+    (API Keys is **off by default** for every user and must be enabled
+    explicitly)
   - Per-user **allowed clusters and servers** — grant individual maps or an
     entire dashboard cluster. A cluster grant automatically covers servers
     added to that cluster later
   - The **master** account always has full, unrestricted access to
     everything
+
+---
+
+## 🔌 Public API & Webhooks
+
+Build your own tools — Discord bots, status pages, automation scripts — that
+read and control your servers over HTTP, and receive **webhooks** when
+something happens.
+
+📖 **Full documentation, endpoint reference and code examples:**
+[API Guide](APIGuide.md)
+
+The API is a **licensed feature**. Nothing is exposed until you create an API
+key or a webhook.
+
+### API Keys
+
+Created in **👤 Account → API Keys**:
+
+- Choose a name, an expiry (30 days, 90 days, 1 year or never), the
+  **scopes** (`read`, `logs`, `control`, `rcon`, `backup`, `restore`,
+  `webhooks`) and which servers the key can reach.
+- A key can **never do more than the account that owns it** — removing a
+  permission from a user immediately removes it from their keys.
+- The key is shown **once** and stored only as a fingerprint. The list shows
+  when and from which IP each key was last used, with one-click **Revoke**.
+- Tools send the key as `Authorization: Bearer <key>`. Each key is limited
+  to 120 requests per minute, and IPs sending invalid keys are blocked
+  automatically.
+
+### What the API can do
+
+| Area | Examples |
+|---|---|
+| Servers | List servers, live status (state, players, RAM, uptime, build), online players, activity logs |
+| Control | Start, stop, restart with optional in-game warning countdown, cancel countdown |
+| Updates | Update one server, or Stop + Update + Start all servers with live progress |
+| RCON | Send RCON commands and in-game chat/broadcast messages |
+| Backups | Trigger backups, list world and player backups |
+| Restore | Restore a world backup, or a player profile by EOS ID |
+
+API actions follow the same safety rules as the dashboard buttons (no
+collisions with updates, backups, maintenance or UPS shutdowns), and every
+action is written to the server's activity log with the API key's name.
+
+### Webhooks
+
+Created in **👤 Account → Webhooks** (or through the API):
+
+- Pick from 25 events: server online / stopping / crashed / state changed,
+  watchdog recovery, resource and disk warnings, scheduled restarts, update
+  detected / started / completed / failed, backup completed / failed, world and
+  player restores, bans, and UPS power events.
+- Each delivery is a signed JSON `POST`, so your tool can verify it came from
+  your manager.
+- Failed deliveries are retried automatically; a webhook that keeps failing is
+  paused and shows why. **Send test** and a **delivery log** are built in.
+- For Discord channels keep using each server's **Discord** tab — webhooks are
+  for your own bots and services.
+
+### Network & Remote Access
+
+To use the dashboard or the API from outside your network, put the manager
+behind HTTPS — for example **Cloudflare Tunnel** (no port forwarding) or a
+**Caddy** reverse proxy. The [API Guide](APIGuide.md#remote-access-internet)
+has step-by-step setups.
+
+The master's **👤 Account → Network & Remote Access** card controls:
+
+| Setting | What it does |
+|---|---|
+| **Listen on: All networks / This PC only** | *This PC only* makes the manager reachable only through a tunnel/proxy on the same PC (applies after a restart) |
+| **I use a reverse proxy or tunnel** | Shows visitors' real IPs and detects HTTPS behind a proxy on the same PC |
+| **API keys require HTTPS** | Refuses API requests sent over plain HTTP (tools on the same PC can still use `http://localhost`) |
 
 ---
 
@@ -711,6 +799,7 @@ including:
 - Global Ban Manager
 - Scheduled RCON commands
 - NUT / UPS power protection and historical monitoring
+- Public API keys and webhooks
 
 Core single-master server management remains available without a license.
 Locked controls show a banner explaining that activation is required.
@@ -780,21 +869,32 @@ custom path is configured), and NUT configuration/history.
 ### Authentication and access
 
 - Passwords are stored as bcrypt hashes (cost 12), never as plain text.
-- The browser uses an HTTP session cookie and a persistent random local
-  session secret.
+- The browser uses an HTTP-only session cookie (`SameSite=Lax`, and
+  `Secure` automatically over HTTPS) and a persistent random local session
+  secret. A new session is created at every login.
+- **Login brute-force protection:** after 10 failed logins from one IP, that
+  IP must wait up to 15 minutes.
 - All manager API routes except setup/login, license activation/status, and
   update-feed status require authentication.
 - Server-scoped API routes enforce the user's server/cluster access in
   addition to hiding unavailable controls in the UI.
-- The WebSocket connection reuses and validates the authenticated session.
+- The WebSocket connection reuses and validates the authenticated session,
+  and each user only receives live logs and status for the servers they are
+  allowed to see.
+- API keys are stored only as fingerprints and are bound to their owner's
+  permissions, the license, and the **API Keys** feature.
+- The dashboard cannot be embedded in other websites, and other websites
+  cannot send requests to the manager from a visitor's browser.
 
 ### Network exposure
 
 The default experience is intended for localhost or a trusted private LAN.
 The built-in server uses HTTP rather than HTTPS. If remote access is required,
-prefer a VPN or a properly configured HTTPS reverse proxy and firewall. Do not
-port-forward the manager directly to the public internet without adding TLS,
-access restrictions, rate limiting, and appropriate operational hardening.
+use a VPN or an HTTPS tunnel / reverse proxy on the manager PC (see
+[Network & Remote Access](#network--remote-access) and the
+[API Guide](APIGuide.md#remote-access-internet)), then turn on **I use a
+reverse proxy or tunnel** and **API keys require HTTPS**. Do not port-forward
+the manager's own port directly to the public internet.
 
 Treat RCON passwords, admin passwords, CurseForge keys, Beacon authentication
 data, Discord webhook URLs, license keys, plugin configs, and the complete
@@ -891,8 +991,9 @@ They are suggestions, not currently implemented features.
   compatibility checks and automatic config backup.
 - **Maintenance calendar:** one timeline for restarts, updates, backups, and
   scheduled RCON commands, including timezone and conflict warnings.
-- **Secure automation API:** scoped API tokens, generic outbound webhooks,
-  Home Assistant integration, and a PowerShell/CLI client.
+- **More integrations on top of the public API:** Home Assistant
+  integration, a live event stream for bots that can't receive webhooks, and
+  a PowerShell/CLI client.
 - **Role templates:** Viewer, Moderator, Operator, Backup Operator, Cluster
   Administrator, plus custom overrides.
 - **Two-factor authentication:** optional TOTP for privileged accounts,
@@ -971,6 +1072,25 @@ Background jobs for one server are intentionally serialized. A scheduled
 restart or auto-update takes priority over backup/save work, and automatic jobs
 wait while a manual operation owns the server. Review the activity/server log
 for `[TASK QUEUE]` messages rather than starting duplicate operations.
+
+---
+
+### API requests are refused
+
+- `401` — the key is missing, wrong, revoked or expired. Create a new one in
+  **👤 Account → API Keys**.
+- `403 insufficient_scope` — the key lacks the needed scope, or its owner
+  lost the matching permission.
+- `403 https_required` — **API keys require HTTPS** is on; use the `https://`
+  address of your tunnel/proxy.
+- See the [API Guide](APIGuide.md#troubleshooting) for every error code.
+
+### Everyone is locked out of login or the API behind a proxy
+
+If the manager is behind a tunnel or reverse proxy on the same PC, turn on
+**I use a reverse proxy or tunnel** in **Network & Remote Access**. Without it
+every visitor appears to come from `127.0.0.1`, so a few wrong passwords from
+anyone block everybody for up to 15 minutes.
 
 ---
 
